@@ -1,14 +1,9 @@
 package com.kostpost.mysqlspringclient;
 
+import com.kostpost.bank.BankAcc;
+import com.kostpost.client.Client;
 import com.kostpost.showtable.TableLister;
 
-import com.kostpost.client.ClientRepository;
-import com.kostpost.client.Client;
-
-import com.kostpost.bank.Bank;
-import com.kostpost.bank.BankRepository;
-
-import jakarta.persistence.Table;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -40,23 +35,73 @@ public class MySqlSpringClientApplication {
 
         boolean working = true;
 
+        MainController controller = context.getBean(MainController.class);
+
+
         do {
 
-            System.out.println("Choice action\n1 - See all tables\n2 - See dates in table");
+            System.out.println("Choice action\n1 - See all tables\n2 - See dates in table\n3 - Add dates in Table");
             action = AskChoiceAction.next();
 
 
             switch (action) {
                 case "1" -> //Show all tables
                         MySqlSpringClientApplication.ShowAllTables(databaseName, Tables);
+
                 case "2" -> {
                     MySqlSpringClientApplication.ShowAllTables(databaseName, Tables);
                     choiceTable = AskChoiceTable.next();
 
                     System.out.println(Tables.get(Integer.parseInt(choiceTable)));
+
+                    controller.ShowAllClients(Tables.get(Integer.parseInt(choiceTable)));
                 }
 
-                case "3" ->
+                case "3" ->{
+                    MySqlSpringClientApplication.ShowAllTables(databaseName, Tables);
+                    choiceTable = AskChoiceTable.next();
+
+                    System.out.println(Tables.get(Integer.parseInt(choiceTable)));
+
+                    switch (Tables.get(Integer.parseInt(choiceTable)))
+                    {
+                        case "client" -> {
+                            Scanner AskFirstName = new Scanner(System.in);
+                            String FirstName;
+
+                            Scanner AskSecondName = new Scanner(System.in);
+                            String SecondName;
+
+                            System.out.print("Set First Name: ");
+                            FirstName = AskFirstName.next();
+
+                            System.out.print("Set Second Name: ");
+                            SecondName = AskSecondName.next();
+
+                            Client createdClient = new Client();
+                            createdClient.CreateClient(FirstName,SecondName);
+
+                            controller.addDataClient(createdClient);
+                        }
+
+                        case "bankacc" -> {
+                            Scanner AskMoney = new Scanner(System.in);
+                            double money;
+
+                            System.out.print("Set account balance: ");
+                            money = AskMoney.nextDouble();
+
+                            BankAcc createdBankAcc = new BankAcc();
+                            BankAcc qwe = new BankAcc();
+                            createdBankAcc.CreateBankAcc(money);
+
+                            controller.addDataBank(createdBankAcc);
+                        }
+                    }
+
+                }
+
+                case "4" ->
                     working = false;
             }
 

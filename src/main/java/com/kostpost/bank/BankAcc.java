@@ -9,12 +9,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @Setter
 @Entity
 @SpringBootApplication
-@Table(name = "bank")
-public class Bank {
+@Table(name = "bankacc")
+public class BankAcc {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public int id;
 
     public double AllMoney;
+
+    public BankAcc CreateBankAcc(double AllMoney)
+    {
+        BankAcc createdAcc = new BankAcc();
+        this.AllMoney = AllMoney;
+        createdAcc.setAllMoney(AllMoney);
+
+        return createdAcc;
+    }
 }
