@@ -32,4 +32,13 @@ public class Client {
         return createdAcc;
     }
 
+    public void print()
+    {
+        System.out.println("\n");
+        System.out.println("ID - " + id);
+        System.out.println("First Name - " + FirstName);
+        System.out.println("Second Name - " + SecondName);
+        System.out.println("\n");
+    }
+
 }

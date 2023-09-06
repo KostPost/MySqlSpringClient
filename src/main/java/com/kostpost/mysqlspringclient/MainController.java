@@ -46,7 +46,7 @@ public class MainController {
                 {
                     System.out.println("\n");
                     System.out.println("Bank account ID:" +  bankAcc.getId());
-                    System.out.println("Bank account money: " + bankAcc.getAllMoney());
+                    System.out.println("Bank account money: " + bankAcc.getBalance());
                     System.out.println("\n");
                 }
             }
@@ -59,6 +59,14 @@ public class MainController {
 
     }
 
+    public Client ClientfindByID(int id)
+    {
+        return clientRepository.findById(id).orElse(null);
+    }
+    public BankAcc BankAccfindByID(int id)
+    {
+        return bankRepository.findById(id).orElse(null);
+    }
     @PostMapping("/add-data")
     public Client addDataClient(@RequestBody Client client) {
         return clientRepository.save(client);

@@ -40,7 +40,8 @@ public class MySqlSpringClientApplication {
 
         do {
 
-            System.out.println("Choice action\n1 - See all tables\n2 - See dates in table\n3 - Add dates in Table");
+            System.out.println("Choice action\n1 - See all tables\n2 - See dates in table\n3 - Add dates in Table\n" +
+                    "4 - Find Account\n");
             action = AskChoiceAction.next();
 
 
@@ -52,7 +53,7 @@ public class MySqlSpringClientApplication {
                     MySqlSpringClientApplication.ShowAllTables(databaseName, Tables);
                     choiceTable = AskChoiceTable.next();
 
-                    System.out.println(Tables.get(Integer.parseInt(choiceTable)));
+                    //System.out.println(Tables.get(Integer.parseInt(choiceTable)));
 
                     controller.ShowAllClients(Tables.get(Integer.parseInt(choiceTable)));
                 }
@@ -61,7 +62,7 @@ public class MySqlSpringClientApplication {
                     MySqlSpringClientApplication.ShowAllTables(databaseName, Tables);
                     choiceTable = AskChoiceTable.next();
 
-                    System.out.println(Tables.get(Integer.parseInt(choiceTable)));
+                    //System.out.println(Tables.get(Integer.parseInt(choiceTable)));
 
                     switch (Tables.get(Integer.parseInt(choiceTable)))
                     {
@@ -101,7 +102,45 @@ public class MySqlSpringClientApplication {
 
                 }
 
-                case "4" ->
+                case "4" ->{
+
+                    //System.out.println(Tables.get(Integer.parseInt(choiceTable)));
+
+                    System.out.println("Choice a table");
+
+                    MySqlSpringClientApplication.ShowAllTables(databaseName, Tables);
+                    choiceTable = AskChoiceTable.next();
+
+                    Scanner FindById = new Scanner(System.in);
+                    int id;
+
+                    switch (Tables.get(Integer.parseInt(choiceTable))){
+
+                        case "client" -> {
+                            System.out.print("Write a Account ID to find: ");
+                            id = FindById.nextInt();
+
+                            Client clientAcc = controller.ClientfindByID(id);
+
+                            if(clientAcc != null) clientAcc.print();
+                            else System.out.println("This account doesn't exist");
+                        }
+
+                        case "bankacc" -> {
+                            System.out.print("Write a Account ID to find: ");
+                            id = FindById.nextInt();
+
+                            BankAcc bankAcc = controller.BankAccfindByID(id);
+
+                            if(bankAcc != null) bankAcc.print();
+                            else System.out.println("This account doesn't exist");
+
+                        }
+                    }
+
+                }
+
+                case "5" ->
                     working = false;
             }
 
