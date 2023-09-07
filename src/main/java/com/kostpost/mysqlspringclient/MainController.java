@@ -7,7 +7,9 @@ import com.kostpost.client.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 @RestController
 @RequestMapping("/tables")
@@ -31,11 +33,7 @@ public class MainController {
 
                 for(Client client : clients)
                 {
-                    System.out.println("\n");
-                    System.out.println("User ID: " + client.getId());
-                    System.out.println("FirstName: " + client.getFirstName());
-                    System.out.println("SecondName: " + client.getSecondName());
-                    System.out.println("\n");
+                    ClientPrint(client);
                 }
             }
 
@@ -44,10 +42,7 @@ public class MainController {
 
                 for(BankAcc bankAcc : bankAccs)
                 {
-                    System.out.println("\n");
-                    System.out.println("Bank account ID:" +  bankAcc.getId());
-                    System.out.println("Bank account money: " + bankAcc.getBalance());
-                    System.out.println("\n");
+                    BankPrint(bankAcc);
                 }
             }
 
@@ -57,15 +52,6 @@ public class MainController {
 
 
 
-    }
-
-    public Client ClientfindByID(int id)
-    {
-        return clientRepository.findById(id).orElse(null);
-    }
-    public BankAcc BankAccfindByID(int id)
-    {
-        return bankRepository.findById(id).orElse(null);
     }
     @PostMapping("/add-data")
     public Client addDataClient(@RequestBody Client client) {
@@ -77,6 +63,148 @@ public class MainController {
         return bankRepository.save(bankAcc);
     }
 
+    public BankAcc CreateBankAcc(double balance)
+    {
+        BankAcc createdAcc = new BankAcc();
+        createdAcc.balance = balance;
+        createdAcc.setBalance(balance);
+
+        return createdAcc;
+    }
+
+    public Client CreateClient(String FirstName, String SecondName)
+    {
+        Client createdAcc = new Client();
+        createdAcc.FirstName = FirstName;
+        createdAcc.SecondName = SecondName;
+
+        createdAcc.setFirstName(FirstName);
+        createdAcc.setSecondName(SecondName);
+
+        return createdAcc;
+    }
+
+    public void BankPrint(BankAcc accPrint)
+    {
+        System.out.println("\n");
+        System.out.println("ID - " + accPrint.id);
+        System.out.println("Balance - " + accPrint.balance);
+        System.out.println("\n");
+    }
+
+    public void ClientPrint(Client clientPrint)
+    {
+        System.out.println("\n");
+        System.out.println("ID - " + clientPrint.id);
+        System.out.println("First Name - " + clientPrint.FirstName);
+        System.out.println("Second Name - " + clientPrint.SecondName);
+        System.out.println("\n");
+    }
+
+    public Client ClientFindByID(int id)
+    {
+        return clientRepository.findById(id).orElse(null);
+    }
+
+    public List<Client> ClientFindByFirstName (String FirstName) {return clientRepository.findByFirstName(FirstName); }
+
+    public BankAcc BankAccFindByID(int id)
+    {
+        return bankRepository.findById(id).orElse(null);
+    }
+
+
+
+    public void FindBy(String databaseName, ArrayList<String> Tables, MainController controller)
+    {
+        Scanner AskChoiceTable = new Scanner(System.in);
+        String  choiceTable;
+
+        MySqlSpringClientApplication.ShowAllTables(databaseName, Tables);
+        choiceTable = AskChoiceTable.next();
+
+        System.out.println(Tables.get(Integer.parseInt(choiceTable)));
+
+        Scanner AskFindAccount = new Scanner(System.in);
+        String FindAccount;
+
+        switch (Tables.get(Integer.parseInt(choiceTable))){
+
+            case "bankacc" -> {
+
+                System.out.println("Find by: \n1 - Find by ID");
+                FindAccount = AskFindAccount.next();
+
+                switch (FindAccount){
+
+                    case "1" -> {
+                        Scanner FindById = new Scanner(System.in);
+                        int id;
+
+                        System.out.println("Enter ID");
+                        id = FindById.nextInt();
+
+                        BankAcc bankAcc = controller.BankAccFindByID(id);
+
+                        if(bankAcc != null) controller.BankPrint(bankAcc);
+                        else System.out.println("This account doesn't exist");
+                    }
+                }
+            }
+
+            case "client" -> {
+                System.out.println("Find by: \n1 - Find by ID\n2 - Find by First Name\n3 - Find by Second Name");
+                FindAccount = AskFindAccount.next();
+
+                switch (FindAccount){
+
+                    case "1" -> {
+                        Scanner FindById = new Scanner(System.in);
+                        int id;
+
+                        System.out.println("Enter ID");
+                        id = FindById.nextInt();
+
+                        Client client = controller.ClientFindByID(id);
+
+                        if(client != null) controller.ClientPrint(client);
+                        else System.out.println("This account doesn't exist");
+                    }
+
+                    case "2" -> {
+                        Scanner FindByFirstName = new Scanner(System.in);
+                        String FirstName;
+
+                        System.out.println("Enter First Name");
+                        FirstName = FindByFirstName.next();
+
+                        List<Client> clients = controller.ClientFindByFirstName(FirstName);
+
+                        if(clients != null) {
+
+                            for(Client client : clients)
+                            {
+                                controller.ClientPrint(client);
+                            }
+                        }
+                        else System.out.println("This account doesn't exist");
+                    }
+
+                    case "3" -> {
+                        Scanner FindBySecondName = new Scanner(System.in);
+                        String SecondName;
+
+
+                    }
+
+
+
+                }
+            }
+
+        }
+
+    }
 
 
 }

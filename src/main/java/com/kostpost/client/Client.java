@@ -20,25 +20,4 @@ public class Client {
     public String FirstName;
     public String SecondName;
 
-    public Client CreateClient(String FirstName, String SecondName)
-    {
-        Client createdAcc = new Client();
-        this.FirstName = FirstName;
-        this.SecondName = SecondName;
-
-        createdAcc.setFirstName(FirstName);
-        createdAcc.setSecondName(SecondName);
-
-        return createdAcc;
-    }
-
-    public void print()
-    {
-        System.out.println("\n");
-        System.out.println("ID - " + id);
-        System.out.println("First Name - " + FirstName);
-        System.out.println("Second Name - " + SecondName);
-        System.out.println("\n");
-    }
-
 }

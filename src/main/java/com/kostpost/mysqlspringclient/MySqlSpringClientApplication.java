@@ -80,7 +80,7 @@ public class MySqlSpringClientApplication {
                             SecondName = AskSecondName.next();
 
                             Client createdClient = new Client();
-                            createdClient.CreateClient(FirstName,SecondName);
+                            createdClient = controller.CreateClient(FirstName,SecondName);
 
                             controller.addDataClient(createdClient);
                         }
@@ -93,8 +93,7 @@ public class MySqlSpringClientApplication {
                             money = AskMoney.nextDouble();
 
                             BankAcc createdBankAcc = new BankAcc();
-                            BankAcc qwe = new BankAcc();
-                            createdBankAcc.CreateBankAcc(money);
+                            createdBankAcc = controller.CreateBankAcc(money);
 
                             controller.addDataBank(createdBankAcc);
                         }
@@ -102,45 +101,51 @@ public class MySqlSpringClientApplication {
 
                 }
 
-                case "4" ->{
+//                case "4" ->{
+//
+//                    //System.out.println(Tables.get(Integer.parseInt(choiceTable)));
+//
+//                    System.out.println("Choice a table");
+//
+//                    MySqlSpringClientApplication.ShowAllTables(databaseName, Tables);
+//                    choiceTable = AskChoiceTable.next();
+//
+//                    Scanner FindById = new Scanner(System.in);
+//                    int id;
+//
+//                    switch (Tables.get(Integer.parseInt(choiceTable))){
+//
+//                        case "client" -> {
+//                            System.out.print("Write a Account ID to find: ");
+//                            id = FindById.nextInt();
+//
+//                            Client clientAcc = controller.ClientfindByID(id);
+//
+////                            if(clientAcc != null) controller.BankPrint(clientAcc);
+////                            else System.out.println("This account doesn't exist");
+//                        }
+//
+//                        case "bankacc" -> {
+//                            System.out.print("Write a Account ID to find: ");
+//                            id = FindById.nextInt();
+//
+//                            BankAcc bankAcc = controller.BankAccfindByID(id);
+//
+//                            if(bankAcc != null) controller.BankPrint(bankAcc);
+//                            else System.out.println("This account doesn't exist");
+//
+//                        }
+//                    }
+//
+//                }
 
-                    //System.out.println(Tables.get(Integer.parseInt(choiceTable)));
+                case "4" -> {
 
-                    System.out.println("Choice a table");
-
-                    MySqlSpringClientApplication.ShowAllTables(databaseName, Tables);
-                    choiceTable = AskChoiceTable.next();
-
-                    Scanner FindById = new Scanner(System.in);
-                    int id;
-
-                    switch (Tables.get(Integer.parseInt(choiceTable))){
-
-                        case "client" -> {
-                            System.out.print("Write a Account ID to find: ");
-                            id = FindById.nextInt();
-
-                            Client clientAcc = controller.ClientfindByID(id);
-
-                            if(clientAcc != null) clientAcc.print();
-                            else System.out.println("This account doesn't exist");
-                        }
-
-                        case "bankacc" -> {
-                            System.out.print("Write a Account ID to find: ");
-                            id = FindById.nextInt();
-
-                            BankAcc bankAcc = controller.BankAccfindByID(id);
-
-                            if(bankAcc != null) bankAcc.print();
-                            else System.out.println("This account doesn't exist");
-
-                        }
-                    }
+                    controller.FindBy(databaseName,Tables,controller);
 
                 }
 
-                case "5" ->
+                case "6" ->
                     working = false;
             }
 

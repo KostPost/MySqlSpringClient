@@ -19,25 +19,6 @@ public class BankAcc {
     public int id;
 
     public double balance;
-
-    public BankAcc CreateBankAcc(double balance)
-    {
-        BankAcc createdAcc = new BankAcc();
-        this.balance = balance;
-        createdAcc.setBalance(balance);
-
-        return createdAcc;
-    }
-
-    public void print()
-    {
-        System.out.println("\n");
-        System.out.println("ID - " + id);
-        System.out.println("Balance - " + balance);
-        System.out.println("\n");
-    }
-
-
 }
 
 
