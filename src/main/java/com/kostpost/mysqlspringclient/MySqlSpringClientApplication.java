@@ -142,7 +142,7 @@ public class MySqlSpringClientApplication {
                                     Scanner AskFistName = new Scanner((System.in));
                                     String FirstName;
 
-                                    System.out.print("Write a name:\t");
+                                    System.out.print("Write a First Name:\t");
                                     FirstName = AskFistName.next();
 
                                     List<Client> client = controller.findByFirstName(FirstName);
@@ -153,7 +153,17 @@ public class MySqlSpringClientApplication {
                                 }
 
                                 case 3 -> {
+                                    Scanner AskSecondName = new Scanner((System.in));
+                                    String SecondName;
 
+                                    System.out.print("Write a Second Name:\t");
+                                    SecondName = AskSecondName.next();
+
+                                    List<Client> client = controller.findBySecondName(SecondName);
+
+                                    for(Client c : client){
+                                        controller.ClientPrint(c);
+                                    }
                                 }
 
                             }

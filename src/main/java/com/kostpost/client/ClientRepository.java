@@ -12,5 +12,5 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
     //List<Client> findByFirstName = new ArrayList<>();
 
     List<Client> findByFirstName(String FirstName);
-    //List<Client> findBySecondName(String FirstName);
+    List<Client> findBySecondName(String FirstName);
 }

@@ -82,7 +82,7 @@ public class MainController {
     {
         Client createdAcc = new Client();
         createdAcc.firstName = FirstName;
-        createdAcc.SecondName = SecondName;
+        createdAcc.secondName = SecondName;
 
         createdAcc.setFirstName(FirstName);
         createdAcc.setSecondName(SecondName);
@@ -103,7 +103,7 @@ public class MainController {
         System.out.println("\n");
         System.out.println("ID - " + clientPrint.id);
         System.out.println("First Name - " + clientPrint.firstName);
-        System.out.println("Second Name - " + clientPrint.SecondName);
+        System.out.println("Second Name - " + clientPrint.secondName);
         System.out.println("\n");
     }
 
@@ -117,10 +117,10 @@ public class MainController {
         return clientRepository.findByFirstName(FirstName);
     }
 
-//    @GetMapping("/find-by-secondname")
-//    public List<Client> findBySecondName(@RequestParam String FirstName) {
-//        return clientRepository.findByFirstName(FirstName);
-//    }
+    @GetMapping("/find-by-secondname")
+    public List<Client> findBySecondName(@RequestParam String FirstName) {
+        return clientRepository.findBySecondName(FirstName);
+    }
 
     public BankAcc BankAccFindByID(int id)
     {

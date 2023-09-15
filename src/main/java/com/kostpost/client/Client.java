@@ -20,6 +20,6 @@ public class Client {
 
     @Column(name = "first_name")
     public String firstName;
-    public String SecondName;
+    public String secondName;
 
 }
