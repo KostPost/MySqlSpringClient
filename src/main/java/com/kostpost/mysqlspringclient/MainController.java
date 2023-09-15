@@ -4,15 +4,21 @@ import com.kostpost.bank.BankAcc;
 import com.kostpost.bank.BankRepository;
 import com.kostpost.client.Client;
 import com.kostpost.client.ClientRepository;
+import com.kostpost.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-@RestController
-@RequestMapping("/tables")
+@Controller
+@ComponentScan(basePackages = {"com.kostpost.showtable",})
+@ComponentScan(basePackages = {"com.kostpost.client",})
+@ComponentScan(basePackages = {"com.kostpost.bank",})
 public class MainController {
 
     private final ClientRepository clientRepository;
@@ -75,7 +81,7 @@ public class MainController {
     public Client CreateClient(String FirstName, String SecondName)
     {
         Client createdAcc = new Client();
-        createdAcc.FirstName = FirstName;
+        createdAcc.firstName = FirstName;
         createdAcc.SecondName = SecondName;
 
         createdAcc.setFirstName(FirstName);
@@ -96,7 +102,7 @@ public class MainController {
     {
         System.out.println("\n");
         System.out.println("ID - " + clientPrint.id);
-        System.out.println("First Name - " + clientPrint.FirstName);
+        System.out.println("First Name - " + clientPrint.firstName);
         System.out.println("Second Name - " + clientPrint.SecondName);
         System.out.println("\n");
     }
@@ -106,7 +112,15 @@ public class MainController {
         return clientRepository.findById(id).orElse(null);
     }
 
-    public List<Client> ClientFindByFirstName (String FirstName) {return clientRepository.findByFirstName(FirstName); }
+    @GetMapping("/find-by-firstname")
+    public List<Client> findByFirstName(@RequestParam String FirstName) {
+        return clientRepository.findByFirstName(FirstName);
+    }
+
+//    @GetMapping("/find-by-secondname")
+//    public List<Client> findBySecondName(@RequestParam String FirstName) {
+//        return clientRepository.findByFirstName(FirstName);
+//    }
 
     public BankAcc BankAccFindByID(int id)
     {
@@ -178,16 +192,16 @@ public class MainController {
                         System.out.println("Enter First Name");
                         FirstName = FindByFirstName.next();
 
-                        List<Client> clients = controller.ClientFindByFirstName(FirstName);
-
-                        if(clients != null) {
-
-                            for(Client client : clients)
-                            {
-                                controller.ClientPrint(client);
-                            }
-                        }
-                        else System.out.println("This account doesn't exist");
+//                        List<Client> clients = controller.findByFirstName(FirstName);
+//
+//                        if(clients != null) {
+//
+//                            for(Client client : clients)
+//                            {
+//                                controller.ClientPrint(client);
+//                            }
+//                        }
+//                        else System.out.println("This account doesn't exist");
                     }
 
                     case "3" -> {
